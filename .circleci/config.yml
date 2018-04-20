@@ -137,23 +137,11 @@ jobs:
           name: Install node-gyp globally
           command: npm install -g node-gyp
       - run:
-          name: Install sodium
-          command: npm install -g sodium@2.0.3 --unsafe-perm
-      - run:
-          name: Install argon
-          command: npm install -g argon2@0.17.1 --unsafe-perm
-      - run:
-          name: Link NPM sodium
-          command: npm link sodium
-      - run:
           name: Update NPM install
           command: npm install
       - run:
           name: Delete build dependencies
           command: apk del build-dependencies
-      # - run:
-      #     name: Update NPM install
-      #     command: npm link sodium && npm link argon2 && npm install --production
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -170,7 +158,6 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "package.json" }}
-            - dependency-cache-
       - run:
           name: Create dir for test results
           command: mkdir -p ./test/results
@@ -203,16 +190,6 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "package.json" }}
-            - dependency-cache-
-      - run:
-          name: Install sodium
-          command: npm install -g sodium@2.0.3 --unsafe-perm
-      - run:
-          name: Install argon
-          command: npm install -g argon2@0.17.1 --unsafe-perm
-      - run:
-          name: Link NPM sodium
-          command: npm link sodium
       - run:
           name: Execute code coverage check
           command: npm -s run test:coverage-check
@@ -240,7 +217,6 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "package.json" }}
-            - dependency-cache-
       - run:
           name: Create dir for test results
           command: mkdir -p ./test/results
@@ -270,7 +246,6 @@ jobs:
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "package.json" }}
-            - dependency-cache-
       - run:
           name: Create dir for test results
           command: mkdir -p ./test/results
